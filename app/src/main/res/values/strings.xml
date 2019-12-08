@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Dodu</string>
+    <string name="title_activity_home_screen">Beranda</string>
+    <string name="navigation_drawer_open">Buka navigasi drawer</string>
+    <string name="navigation_drawer_close">Tutup navigasi drawer</string>
+    <string name="nav_header_title">Khisby</string>
+    <string name="nav_header_subtitle">khisby@gmail.com</string>
+    <string name="nav_header_desc">Navigasi header</string>
+
+    <string name="menu_keuangan">Keuangan</string>
+    <string name="menu_laporan">Laporan</string>
+    <string name="menu_tentang">Tentang</string>
+    <string name="menu_logout">Logout</string>
 </resources>

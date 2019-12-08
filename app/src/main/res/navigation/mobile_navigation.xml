@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_keuangan">
+
+    <fragment
+        android:id="@+id/nav_keuangan"
+        android:name="id.khisoft.dodu.fragment.keuangan.keuangan"
+        android:label="@string/menu_keuangan"
+        tools:layout="@layout/keuangan_fragment" />
+
+    <fragment
+        android:id="@+id/nav_laporan"
+        android:name="id.khisoft.dodu.fragment.laporan.laporan"
+        android:label="@string/menu_laporan"
+        tools:layout="@layout/laporan_fragment" />
+
+    <fragment
+        android:id="@+id/nav_tentang"
+        android:name="id.khisoft.dodu.fragment.tentang.tentang"
+        android:label="@string/menu_tentang"
+        tools:layout="@layout/tentang_fragment" />
+
+    <fragment
+        android:id="@+id/nav_logout"
+        android:name="id.khisoft.dodu.fragment.logout.logout"
+        android:label="@string/menu_logout"
+        tools:layout="@layout/logout_fragment" />
+
+</navigation>
