@@ -29,7 +29,9 @@ public class logout extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         Intent i = new Intent(getContext(), login_screen.class);
         startActivity(i);
-        return inflater.inflate(R.layout.logout_fragment, container, false);
+//        View view = inflater.inflate(R.layout.logout_fragment, container, false);
+        getActivity().finish();
+        return null;
     }
 
     @Override
