@@ -19,7 +19,7 @@ public class tambah_keuangan extends AppCompatActivity {
         setContentView(R.layout.activity_tambah_keuangan);
 
         Spinner spKategori = findViewById(R.id.spinnerKategori);
-        final ArrayAdapter<String> adapterSpKategori = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, new String[]{"Minum","Makan","Main"});
+        final ArrayAdapter<String> adapterSpKategori = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, new String[]{"Minum","Makan","Main", "Pajak"});
         spKategori.setAdapter(adapterSpKategori);
         spKategori.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

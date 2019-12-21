@@ -3,6 +3,7 @@ package id.khisoft.dodu.fragment.logout;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,11 +14,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import id.khisoft.dodu.Controller.AkunController;
 import id.khisoft.dodu.R;
 import id.khisoft.dodu.login_screen;
 
-public class logout extends Fragment {
+import static android.content.Context.MODE_PRIVATE;
 
+public class logout extends Fragment {
+    private AkunController ac;
     private LogoutViewModel mViewModel;
 
     public static logout newInstance() {
@@ -27,10 +31,12 @@ public class logout extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        Intent i = new Intent(getContext(), login_screen.class);
-        startActivity(i);
+//        Intent i = new Intent(getContext(), login_screen.class);
+//        startActivity(i);
+        ac = new AkunController(getActivity());
+        ac.Logout();
 //        View view = inflater.inflate(R.layout.logout_fragment, container, false);
-        getActivity().finish();
+//        getActivity().finish();
         return null;
     }
 

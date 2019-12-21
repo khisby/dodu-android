@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -17,14 +18,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=" Dodu mempunyai kepanjangan Dompet Dhuit diambil dari bahasa jawa yang artinya adalah Dompet Uang. Dodu adalah aplikasi untuk mencatat transaksi keuangan pribadi. Sehingga, pengguna dapat menggontrol keuangan secara mandiri untuk bulan berikutnya. "
-            />
+            android:text=" Dodu mempunyai kepanjangan Dompet Dhuit diambil dari bahasa jawa yang artinya adalah Dompet Uang. Dodu adalah aplikasi untuk mencatat transaksi keuangan pribadi. Sehingga, pengguna dapat menggontrol keuangan secara mandiri untuk bulan berikutnya. " />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=" © 2019 by Khisoft "
-            />
+            android:text=" © 2019 by Khisoft " />
 
     </LinearLayout>
 </FrameLayout>

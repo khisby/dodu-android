@@ -1,17 +1,17 @@
 package id.khisoft.dodu.entity;
 
 public class Pengguna {
-    private int id;
     private String nama;
     private String surel;
     private String sandi;
+    private String token;
 
-    public int getId() {
-        return id;
+    public String getToken() {
+        return token;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getNama() {

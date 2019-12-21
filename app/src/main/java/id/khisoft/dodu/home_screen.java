@@ -1,11 +1,13 @@
 package id.khisoft.dodu;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.util.Log;
 import android.view.View;
 
 import androidx.navigation.NavController;
@@ -21,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.TextView;
 
 public class home_screen extends AppCompatActivity {
 
@@ -51,11 +54,23 @@ public class home_screen extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        View headerView = navigationView.getHeaderView(0);
+
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("UserLoginDodu", MODE_PRIVATE);
+//        Log.e("error",pref.getString("nama",""));
+        TextView nav_header_title = headerView.findViewById(R.id.nav_header_title);
+        TextView nav_header_subtitle = headerView.findViewById(R.id.nav_header_subtitle);
+        nav_header_title.setText(pref.getString("nama", null));
+        nav_header_subtitle.setText(pref.getString("surel", ""));
+
+
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        // Inflate the menu; this adds items NavigationView to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home_screen, menu);
         return true;
     }
