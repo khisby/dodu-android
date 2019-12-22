@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import id.khisoft.dodu.Controller.AkunController;
 
@@ -20,6 +21,11 @@ public class login_screen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
         ac = new AkunController(this);
+
+        Intent i = getIntent();
+        if(i.getStringExtra("pesan")!=null){
+            Toast.makeText(this, i.getStringExtra("pesan"), Toast.LENGTH_SHORT).show();
+        }
 
         TextView tvRegisterScreen = findViewById(R.id.tvRegisterScreen);
         Button btnLogin = findViewById(R.id.btnLogin);

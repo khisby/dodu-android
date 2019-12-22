@@ -25,6 +25,7 @@ import java.util.Map;
 
 import id.khisoft.dodu.home_screen;
 import id.khisoft.dodu.login_screen;
+import id.khisoft.dodu.utils.ConfigApi;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -32,10 +33,11 @@ public class AkunController {
     private Context ctx;
     private RequestQueue queue;
     private Activity activity;
-    private String url = "http://10.0.2.2/dodu/api/";
+    private String url;
     SharedPreferences pref;
 
     public AkunController(Activity activity) {
+        this.url = ConfigApi.url;
         this.activity = activity;
         this.ctx = activity.getApplicationContext();
         queue = Volley.newRequestQueue(this.ctx);
@@ -106,6 +108,43 @@ public class AkunController {
                         editor.apply();
 
                         Intent i = new Intent(ctx, login_screen.class);
+                        activity.startActivity(i);
+                        activity.finish();
+                    }else{
+                        Toast.makeText(ctx, response.getString("pesan"), Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("error",error.getMessage());
+            }
+        }));
+
+    }
+
+    public void Register(String namaPengguna, String surelPengguna, String sandiPengguna){
+        String url = this.url + "registrasi/register";
+        JSONObject params = new JSONObject();
+        try {
+            params.put("namaPengguna", namaPengguna);
+            params.put("surelPengguna", surelPengguna);
+            params.put("sandiPengguna",sandiPengguna);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        queue.add(new JsonObjectRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    if(response.getInt("status") == 201){
+                        Intent i = new Intent(ctx, login_screen.class);
+                        i.putExtra("pesan", response.getString("pesan"));
                         activity.startActivity(i);
                         activity.finish();
                     }else{
