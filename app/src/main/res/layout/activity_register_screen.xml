@@ -28,6 +28,7 @@
         android:inputType="textPersonName"
         android:hint="Masukkan Nama"
         android:layout_marginTop="30dp"
+        android:textColorHint="@color/textPrimary"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:textColor="@color/textPrimary"
@@ -44,6 +45,8 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:textColor="@color/textPrimary"
+
+        android:textColorHint="@color/textPrimary"
         />
 
     <EditText
@@ -56,7 +59,8 @@
         android:layout_marginTop="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:textColor="@color/textPrimary"/>
+        android:textColor="@color/textPrimary"
+        android:textColorHint="@color/textPrimary"/>
 
     <Button
         android:id="@+id/btnRegister"
@@ -66,7 +70,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:background="#369BED"
+        android:background="@color/btnBgPrimary"
         android:textColor="#fff"/>
 
     <LinearLayout
@@ -87,8 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" Login disini"
-            android:textColor="@color/textSecondary"
-            android:textStyle="bold"/>
+            android:textColor="@color/textSecondary"/>
 
     </LinearLayout>
 
