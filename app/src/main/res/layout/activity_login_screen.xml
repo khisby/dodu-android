@@ -37,6 +37,7 @@
         android:ems="10"
         android:hint="Masukkan Email"
         android:inputType="textEmailAddress"
+        android:textColorHint="@color/textPrimary"
         android:textColor="@color/textPrimary" />
 
     <EditText
@@ -49,6 +50,7 @@
         android:ems="10"
         android:hint="Masukkan Password"
         android:inputType="textPassword"
+        android:textColorHint="@color/textPrimary"
         android:textColor="@color/textPrimary" />
 
     <Button
@@ -58,7 +60,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="30dp"
-        android:background="#369BED"
+        android:background="@color/btnBgPrimary"
         android:text="Login"
         android:textColor="#fff" />
 
@@ -80,8 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" Daftar disini"
-            android:textColor="@color/textSecondary"
-            android:textStyle="bold" />
+            android:textColor="@color/textSecondary" />
 
 
     </LinearLayout>
