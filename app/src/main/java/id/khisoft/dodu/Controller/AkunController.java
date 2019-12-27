@@ -39,45 +39,54 @@ public class AkunController {
     }
 
     public void Login(String surelPengguna, String sandiPengguna){
-        String url = this.url + "login/login";
-        JSONObject params = new JSONObject();
-        try {
-            params.put("surelPengguna", surelPengguna);
-            params.put("sandiPengguna",sandiPengguna);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
+        if(surelPengguna.equals("") && sandiPengguna.equals("")){
+            Toast.makeText(ctx, "Surel dan Sandi tidak boleh kosong", Toast.LENGTH_LONG).show();
+        }else if(sandiPengguna.equals("")){
+            Toast.makeText(ctx, "Sandi tidak boleh kosong", Toast.LENGTH_LONG).show();
+        }else if(surelPengguna.equals("")){
+            Toast.makeText(ctx, "Surel tidak boleh kosong", Toast.LENGTH_LONG).show();
+        }else{
+            String url = this.url + "login/login";
+            JSONObject params = new JSONObject();
+            try {
+                params.put("surelPengguna", surelPengguna);
+                params.put("sandiPengguna",sandiPengguna);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
 
-        queue.add(new JsonObjectRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    if(response.getInt("status") == 200){
-                        JSONObject data = new JSONObject(response.getString("data"));
+            queue.add(new JsonObjectRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        if(response.getInt("status") == 200){
+                            JSONObject data = new JSONObject(response.getString("data"));
 
-                        SharedPreferences.Editor editor = pref.edit();
-                        editor.putString("token", data.getString("TOKEN"));
-                        editor.putString("nama", data.getString("NAMA_PENGGUNA"));
-                        editor.putString("surel", data.getString("SUREL_PENGGUNA"));
-                        editor.apply();
+                            SharedPreferences.Editor editor = pref.edit();
+                            editor.putString("token", data.getString("TOKEN"));
+                            editor.putString("nama", data.getString("NAMA_PENGGUNA"));
+                            editor.putString("surel", data.getString("SUREL_PENGGUNA"));
+                            editor.apply();
 
-                        Intent i = new Intent(ctx, home_screen.class);
-                        activity.startActivity(i);
-                        activity.finish();
-                    }else{
-                        Toast.makeText(ctx, response.getString("pesan"), Toast.LENGTH_LONG).show();
+                            Intent i = new Intent(ctx, home_screen.class);
+                            activity.startActivity(i);
+                            activity.finish();
+                        }else{
+                            Toast.makeText(ctx, response.getString("pesan"), Toast.LENGTH_LONG).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("error",error.getMessage());
-            }
-        }));
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("error",error.getMessage());
+                }
+            }));
+        }
 
     }
 
@@ -121,39 +130,47 @@ public class AkunController {
     }
 
     public void Register(String namaPengguna, String surelPengguna, String sandiPengguna){
-        String url = this.url + "registrasi/register";
-        JSONObject params = new JSONObject();
-        try {
-            params.put("namaPengguna", namaPengguna);
-            params.put("surelPengguna", surelPengguna);
-            params.put("sandiPengguna",sandiPengguna);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        if(namaPengguna.equals("")){
+            Toast.makeText(ctx, "Nama pengguna tidak boleh kosong", Toast.LENGTH_LONG).show();
+        }else if(sandiPengguna.equals("")){
+            Toast.makeText(ctx, "Sandi tidak boleh kosong", Toast.LENGTH_LONG).show();
+        }else if(surelPengguna.equals("")){
+            Toast.makeText(ctx, "Surel tidak boleh kosong", Toast.LENGTH_LONG).show();
+        }else {
+            String url = this.url + "registrasi/register";
+            JSONObject params = new JSONObject();
+            try {
+                params.put("namaPengguna", namaPengguna);
+                params.put("surelPengguna", surelPengguna);
+                params.put("sandiPengguna", sandiPengguna);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
 
-        queue.add(new JsonObjectRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    if(response.getInt("status") == 201){
-                        Intent i = new Intent(ctx, login_screen.class);
-                        i.putExtra("pesan", response.getString("pesan"));
-                        activity.startActivity(i);
-                        activity.finish();
-                    }else{
-                        Toast.makeText(ctx, response.getString("pesan"), Toast.LENGTH_LONG).show();
+            queue.add(new JsonObjectRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        if (response.getInt("status") == 201) {
+                            Intent i = new Intent(ctx, login_screen.class);
+                            i.putExtra("pesan", response.getString("pesan"));
+                            activity.startActivity(i);
+                            activity.finish();
+                        } else {
+                            Toast.makeText(ctx, response.getString("pesan"), Toast.LENGTH_LONG).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("error",error.getMessage());
-            }
-        }));
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("error", error.getMessage());
+                }
+            }));
+        }
 
     }
 }
