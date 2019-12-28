@@ -3,7 +3,6 @@ package id.khisoft.dodu.entity;
 public class Transaksi {
     private int id;
     private Kategori kategori;
-    private Pengguna pengguna;
     private String jenis;
     private int nominal;
     private String keterangan;
@@ -23,14 +22,6 @@ public class Transaksi {
 
     public void setKategori(Kategori kategori) {
         this.kategori = kategori;
-    }
-
-    public Pengguna getPengguna() {
-        return pengguna;
-    }
-
-    public void setPengguna(Pengguna pengguna) {
-        this.pengguna = pengguna;
     }
 
     public String getJenis() {

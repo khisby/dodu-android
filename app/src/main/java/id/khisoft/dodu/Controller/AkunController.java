@@ -28,7 +28,7 @@ public class AkunController {
     private RequestQueue queue;
     private Activity activity;
     private String url;
-    SharedPreferences pref;
+    private SharedPreferences pref;
 
     public AkunController(Activity activity) {
         this.url = ConfigApi.url;

@@ -1,38 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="wrap_content"
     android:id="@+id/item_list"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvKategori"
+
+    <androidx.cardview.widget.CardView
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Kategori"/>
+        app:cardCornerRadius="5dp">
 
-    <TextView
-        android:id="@+id/tvJenis"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Jenis Transaksi"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="14dp"
+            >
 
-    <TextView
-        android:id="@+id/tvNominal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Nominal"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/tvWaktu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Waktu"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvDeskripsi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Deskripsi"/>
+                    <TextView
+                        android:id="@+id/tvKategori"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Kategori 1"
+                        android:textColor="#fdb501"
+                        android:textSize="24dp" />
 
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tvNominal"
+                            android:layout_width="wrap_content"
+                            android:textSize="18dp"
+                            android:textColor="@color/colorPrimary"
+                            android:layout_height="wrap_content"
+                            android:text="Rp. 1.000.000,-" />
+
+
+                        <TextView
+                            android:id="@+id/tvWaktu"
+                            android:layout_width="wrap_content"
+                            android:textSize="18dp"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/colorPrimary"
+                            android:layout_height="wrap_content"
+                            android:text="24 December 2019" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/tvJenis"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="-8dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/transaksi_keluar"
+                        />
+
+                </RelativeLayout>
+
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvDeskripsi"
+                android:layout_width="match_parent"
+                android:textSize="18dp"
+                android:textColor="@color/colorPrimary"
+                android:layout_height="wrap_content"
+                android:text="Ini adalah keterangan Transaksi dari aplikasi yang kita gunakan yaitu dodu Dompet Dhuwit by Khisoft" />
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 </LinearLayout>

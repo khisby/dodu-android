@@ -65,7 +65,6 @@ public class home_screen extends AppCompatActivity {
         nav_header_subtitle.setText(pref.getString("surel", ""));
 
 
-
     }
 
     @Override

@@ -14,10 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import id.khisoft.dodu.Controller.KeuanganController;
 import id.khisoft.dodu.R;
 import id.khisoft.dodu.adapter.RecyclerViewAdapterKeuangan;
 import id.khisoft.dodu.entity.Kategori;
@@ -28,9 +32,14 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class keuangan extends Fragment {
 
-    private KeuanganViewModel mViewModel;
-    private RecyclerViewAdapterKeuangan adapterKeuangan;
+    public KeuanganViewModel mViewModel;
     private ArrayList<Transaksi> transaksi;
+    private KeuanganController kc;
+    private RecyclerView recycleView;
+    private ProgressBar progressBar;
+    private boolean isScrolling;
+    private RecyclerViewAdapterKeuangan adapterKeuangan;
+    private int currentPage;
 
     public static keuangan newInstance() {
         return new keuangan();
@@ -39,14 +48,67 @@ public class keuangan extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        currentPage = 1;
 //        return inflater.inflate(R.layout.keuangan_fragment, container, false);
         View view = inflater.inflate(R.layout.keuangan_fragment, container, false);
-        transaksi = new ArrayList<>();
-        RecyclerView recycleView = view.findViewById(R.id.rvKeuangan);
-        DataDummy();
+        kc = new KeuanganController(getActivity());
+        isScrolling = false;
+        recycleView = view.findViewById(R.id.rvKeuangan);
+        progressBar = view.findViewById(R.id.progressBar);
+
+        transaksi = kc.getAllTransaksi(recycleView,currentPage);
+//        DataDummy();
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recycleView.setLayoutManager(layoutManager);
+//        recycleView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            private int mPreviousTotal = 0;
+//            @Override
+//            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+//                super.onScrollStateChanged(recyclerView, newState);
+//                if(newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
+//                    isScrolling = true;
+//                }
+//            }
+//
+//            @Override
+//            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//                int visibleItemCount = recyclerView.getChildCount();
+//                int totalItemCount = recyclerView.getLayoutManager().getItemCount();
+//                int firstVisibleItem = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+//                if (isScrolling) {
+//                    if (totalItemCount > mPreviousTotal) {
+//                        isScrolling = false;
+//                        mPreviousTotal = totalItemCount;
+//                    }
+//                }
+//                int visibleThreshold = 2;
+////                System.out.println("Total item " + totalItemCount);
+////                System.out.println("Visible item " + visibleItemCount);
+////                System.out.println("First item " + firstVisibleItem );
+////                System.out.println("Kiri " + (totalItemCount - visibleItemCount));
+////                System.out.println("Kanan " + (firstVisibleItem + visibleThreshold));
+//                if (!isScrolling && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
+//                    progressBar.setVisibility(View.VISIBLE);
+//                    isScrolling = true;
+//                    currentPage = currentPage + 1;
+//
+//                    ArrayList<Transaksi> trans = kc.getAllTransaksi(recycleView,currentPage);
+//                    transaksi.clear();
+//                    transaksi.addAll(trans);
+//
+//                    for(Transaksi t: transaksi){
+//                        System.out.println(t.getId());
+//                    }
+//                    System.out.println("===============");
+//
+////                    isScrolling = false;
+////                    progressBar.setVisibility(View.GONE);
+//                }
+//
+//            }
+//        });
 //        recycleView.setHasFixedSize(true);
 
 //        DividerItemDecoration itemDecoration = new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL);
@@ -54,46 +116,12 @@ public class keuangan extends Fragment {
 //        recyclerView.addItemDecoration(itemDecoration);
 //        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        adapterKeuangan = new RecyclerViewAdapterKeuangan(transaksi);
-        recycleView.setAdapter(adapterKeuangan);
+//        adapterKeuangan = new RecyclerViewAdapterKeuangan(transaksi);
+//        recycleView.setAdapter(adapterKeuangan);
 
 
 
         return view;
-    }
-
-    private void DataDummy() {
-
-        Kategori kat = new Kategori();
-        kat.setId(1);
-        kat.setNama("Kategori1");
-
-        Pengguna peng = new Pengguna();
-        peng.setNama("Khisby");
-        peng.setSandi("khisby");
-        peng.setSurel("khisby@gmail.com");
-
-
-        Transaksi a = new Transaksi();
-        a.setId(1);
-        a.setJenis("Jenis a");
-        a.setWaktu("23-09-2019");
-        a.setNominal(10000);
-        a.setPengguna(peng);
-        a.setKategori(kat);
-        a.setKeterangan("Buat anu");
-
-        Transaksi b = new Transaksi();
-        b.setId(2);
-        b.setJenis("Jenis B");
-        b.setWaktu("23-09-2020");
-        b.setNominal(20000);
-        b.setPengguna(peng);
-        b.setKategori(kat);
-        b.setKeterangan("Ini adalah deskripsi dari transaksi");
-
-        transaksi.add(a);
-        transaksi.add(b);
     }
 
     @Override

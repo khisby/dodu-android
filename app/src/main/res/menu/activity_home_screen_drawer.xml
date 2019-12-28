@@ -7,22 +7,22 @@
 
         <item
             android:id="@+id/nav_keuangan"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_keuangan"
             android:title="@string/menu_keuangan" />
 
         <item
             android:id="@+id/nav_laporan"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_laporan"
             android:title="@string/menu_laporan" />
 
         <item
             android:id="@+id/nav_tentang"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_tentang"
             android:title="@string/menu_tentang" />
 
         <item
             android:id="@+id/nav_logout"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_keluar"
             android:title="@string/menu_logout" />
 
     </group>
