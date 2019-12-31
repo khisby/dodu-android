@@ -36,6 +36,7 @@ public class home_screen extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
+        getSupportActionBar().setElevation(0);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

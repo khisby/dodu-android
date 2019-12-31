@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,12 +26,16 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Locale;
 
 import id.khisoft.dodu.Interface.Callback;
 import id.khisoft.dodu.adapter.RecyclerViewAdapterKeuangan;
+import id.khisoft.dodu.adapter.RecyclerViewAdapterLaporan;
 import id.khisoft.dodu.entity.Kategori;
+import id.khisoft.dodu.entity.Laporan;
 import id.khisoft.dodu.entity.Transaksi;
 import id.khisoft.dodu.home_screen;
 import id.khisoft.dodu.utils.ConfigApi;
@@ -45,6 +50,7 @@ public class KeuanganController {
     private SharedPreferences pref;
     private SharedPreferences prefTransaksi;
     ArrayList<Transaksi> transaksi;
+    ArrayList<Laporan> laporan;
 //    int currentPage;
 //    int countPage;
 
@@ -58,6 +64,7 @@ public class KeuanganController {
         pref = this.ctx.getSharedPreferences("UserLoginDodu", MODE_PRIVATE);
         prefTransaksi = this.ctx.getSharedPreferences("TransaksiDodu", MODE_PRIVATE);
         transaksi = new ArrayList<>();
+        laporan = new ArrayList<>();
     }
 
     public ArrayList<Transaksi> getAllTransaksi(final RecyclerView recycleView,int page){
@@ -246,5 +253,65 @@ public class KeuanganController {
 //            }
 //        }
         return transaksi;
+    }
+
+    public ArrayList<Laporan> getAllLaporan(final RecyclerView recycleView, final TextView tvTotalKeuangan){
+            String url = this.url + "laporan/index";
+            JSONObject params = new JSONObject();
+            try {
+                params.put("token", pref.getString("token", null));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            queue.add(new JsonObjectRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        if(response.getInt("status") == 200){
+                            int totalKeuangan = 0;
+                            JSONObject data = new JSONObject(response.getString("data"));
+                            JSONArray kategori = data.getJSONArray("kategori");
+                            JSONArray jumlah = data.getJSONArray("angka");
+                            JSONArray keluar = data.getJSONArray("keluar");
+                            JSONArray masuk = data.getJSONArray("masuk");
+                            JSONArray total = data.getJSONArray("total");
+                            ArrayList<Laporan> laporan = new ArrayList<>();
+
+                            for (int i = 0; i < kategori.length() ; i++) {
+                                Laporan l = new Laporan();
+                                l.setJumlah(jumlah.getInt(i));
+                                l.setKategori(kategori.getString(i));
+                                l.setKeluar(keluar.getInt(i));
+                                l.setMasuk(masuk.getInt(i));
+                                l.setTotal(total.getInt(i));
+                                laporan.add(l);
+
+                                totalKeuangan = totalKeuangan + (masuk.getInt(i) - keluar.getInt(i));
+                            }
+
+                            RecyclerViewAdapterLaporan adapterLaporan = new RecyclerViewAdapterLaporan(laporan);
+                            recycleView.setAdapter(adapterLaporan);
+
+                            Locale localeID = new Locale("in", "ID");
+                            NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
+                            tvTotalKeuangan.setText(String.valueOf(formatRupiah.format(totalKeuangan)));
+
+                        }else{
+                            Toast.makeText(ctx, response.getString("pesan"), Toast.LENGTH_LONG).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("error", error.toString());
+                }
+            }));
+
+        return laporan;
     }
 }

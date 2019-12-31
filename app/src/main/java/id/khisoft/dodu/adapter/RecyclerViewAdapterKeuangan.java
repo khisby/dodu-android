@@ -39,7 +39,7 @@ public class RecyclerViewAdapterKeuangan extends RecyclerView.Adapter<RecyclerVi
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapterKeuangan.ViewHolder holder, int position) {
         NumberFormat formatter = new DecimalFormat("#.###");
-        String formattedNumber = formatter.format(transaksi.get(position).getNominal());
+//        String formattedNumber = formatter.format(transaksi.get(position).getNominal());
 
         SimpleDateFormat formatIncoming = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
         SimpleDateFormat formatOutgoing = new SimpleDateFormat("dd MMM yyyy");
@@ -54,7 +54,11 @@ public class RecyclerViewAdapterKeuangan extends RecyclerView.Adapter<RecyclerVi
         }
 
         holder.tvKategori.setText(transaksi.get(position).getKategori().getNama());
-        holder.tvNominal.setText("Rp. " + formattedNumber + ",-");
+
+        Locale localeID = new Locale("in", "ID");
+        NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
+
+        holder.tvNominal.setText(formatRupiah.format(transaksi.get(position).getNominal()));
         if(Integer.valueOf(transaksi.get(position).getJenis()) == 0){
             holder.tvJenis.setImageResource(R.drawable.transaksi_keluar);
         }else{
