@@ -7,52 +7,73 @@
     android:orientation="vertical"
     tools:context=".tambah_keuangan">
 
-    <LinearLayout
+    <RadioGroup
         android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/PENGELUARAN"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PENGELUARAN" />
+
+            <RadioButton
+                android:id="@+id/PEMASUKAN"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="150dp"
+                android:text="PEMASUKAN"
+                />
+        </LinearLayout>
+
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <Spinner
             android:id="@+id/spinnerKategori"
-            android:layout_width="match_parent"
-            android:layout_marginRight="100dp"
-            android:layout_height="wrap_content" />
+            android:layout_width="210dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true" />
 
         <Button
             android:id="@+id/button"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Tambah Kategori" />
-
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="TAMBAH KATEGORI" />
     </LinearLayout>
 
 
-    <Spinner
-        android:id="@+id/spinnerTransaksi"
+    <EditText
+        android:id="@+id/etKeterangan"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Masukkan Keterangan"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/etNominal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Masukkan Nominal" />
-
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Masukkan Keterangan" />
+        android:hint="Masukkan Nominal Uang"
+        android:inputType="textPersonName" />
 
     <Button
         android:id="@+id/btnTambahKeuangan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tambah" />
+        android:text="SIMPAN" />
 
 
 </LinearLayout>
