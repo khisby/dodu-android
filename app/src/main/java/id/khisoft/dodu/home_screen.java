@@ -30,6 +30,18 @@ public class home_screen extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("HomeActivity", MODE_PRIVATE);
+        if(pref.getBoolean("recreate",false)){
+            SharedPreferences.Editor editor = pref.edit();
+            recreate();
+            editor.putBoolean("recreate", false);
+            editor.commit();
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
@@ -42,6 +54,11 @@ public class home_screen extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), tambah_keuangan.class);
                 startActivity(i);
+
+                SharedPreferences pref = getApplicationContext().getSharedPreferences("HomeActivity", MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putBoolean("recreate", true);
+                editor.commit();
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

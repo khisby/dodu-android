@@ -5,6 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +42,8 @@ import id.khisoft.dodu.entity.Kategori;
 import id.khisoft.dodu.entity.Laporan;
 import id.khisoft.dodu.entity.Transaksi;
 import id.khisoft.dodu.home_screen;
+import id.khisoft.dodu.login_screen;
+import id.khisoft.dodu.tambah_keuangan;
 import id.khisoft.dodu.utils.ConfigApi;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -49,8 +55,10 @@ public class KeuanganController {
     private String url;
     private SharedPreferences pref;
     private SharedPreferences prefTransaksi;
-    ArrayList<Transaksi> transaksi;
-    ArrayList<Laporan> laporan;
+    private ArrayList<Transaksi> transaksi;
+    private ArrayList<Laporan> laporan;
+    private ArrayList<Kategori> kategori;
+    private JSONArray data;
 //    int currentPage;
 //    int countPage;
 
@@ -313,5 +321,172 @@ public class KeuanganController {
             }));
 
         return laporan;
+    }
+
+    public void getKategori(final Spinner spinnerKategori){
+        String url = this.url + "kategori/index";
+        JSONObject params = new JSONObject();
+        try {
+            params.put("token", pref.getString("token", null));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        queue.add(new JsonObjectRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    if(response.getInt("status") == 200){
+                        int totalKeuangan = 0;
+                        data = new JSONArray(response.getString("data"));
+                        kategori= new ArrayList<>();
+
+                        ArrayList<String> kategoriString = new ArrayList<>();
+
+                        for (int i = 0; i < data.length() ; i++) {
+                            JSONObject j = new JSONObject(data.getString(i));
+                            Kategori k = new Kategori();
+                            k.setId(j.getInt("ID_KATEGORI"));
+                            k.setNama(j.getString("NAMA_KATEGORI"));
+
+                            kategoriString.add(j.getString("NAMA_KATEGORI"));
+                            kategori.add(k);
+                        }
+
+
+                        ArrayAdapter<String> adapterSpKategori = new ArrayAdapter<>(activity,android.R.layout.simple_spinner_item, kategoriString);
+                        spinnerKategori.setAdapter(adapterSpKategori);
+
+                    }else{
+                        Toast.makeText(ctx, response.getString("pesan"), Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("error", error.toString());
+            }
+        }));
+
+    }
+
+    public void addKeuangan(final String kategoriName, final int kategoriIndex, final char keluarMasuk, final int nominal, final String keterangan) {
+
+        String url = this.url + "kategori/index";
+        JSONObject params = new JSONObject();
+        try {
+            params.put("token", pref.getString("token", null));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        queue.add(new JsonObjectRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    if(response.getInt("status") == 200){
+                        data = new JSONArray(response.getString("data"));
+                        kategori= new ArrayList<>();
+
+
+                        for (int i = 0; i < data.length() ; i++) {
+                            JSONObject j = new JSONObject(data.getString(i));
+                            Kategori k = new Kategori();
+                            k.setId(j.getInt("ID_KATEGORI"));
+                            k.setNama(j.getString("NAMA_KATEGORI"));
+
+                            kategori.add(k);
+                        }
+
+                        if(kategori.get(kategoriIndex).getNama().equals(kategoriName)){
+                            int kategoriId = kategori.get(kategoriIndex).getId();
+                            String url = ConfigApi.url + "keuangan/prosesTambah";
+                            JSONObject params = new JSONObject();
+                            try {
+                                params.put("token", pref.getString("token", null));
+                                params.put("kategori", kategoriId);
+                                params.put("keluarMasuk", keluarMasuk);
+                                params.put("nominal", nominal);
+                                params.put("keterangan", keterangan);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                            queue.add(new JsonObjectRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    try {
+                                        if (response.getInt("status") == 201) {
+                                            Toast.makeText(ctx, response.getString("pesan"), Toast.LENGTH_LONG).show();
+                                            activity.finish();
+                                        } else {
+                                            Toast.makeText(ctx, response.getString("pesan"), Toast.LENGTH_LONG).show();
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Log.d("error", error.getMessage());
+                                }
+                            }));
+                        }else{
+                            Toast.makeText(ctx, "Ada kesalahan mencocokan kategori", Toast.LENGTH_LONG).show();
+                        }
+
+
+                    }else{
+                        Toast.makeText(ctx, response.getString("pesan"), Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("error", error.toString());
+            }
+        }));
+    }
+
+    public void addKategori(String kategori) {
+        String url = this.url + "kategori/tambah";
+        JSONObject params = new JSONObject();
+        try {
+            params.put("token", pref.getString("token", null));
+            params.put("kategori", kategori);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        queue.add(new JsonObjectRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    if (response.getInt("status") == 201) {
+                        Toast.makeText(ctx, response.getString("pesan"), Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(ctx, response.getString("pesan"), Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("error", error.getMessage());
+            }
+        }));
     }
 }
