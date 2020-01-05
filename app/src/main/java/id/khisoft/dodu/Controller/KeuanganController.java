@@ -43,6 +43,7 @@ import id.khisoft.dodu.entity.Laporan;
 import id.khisoft.dodu.entity.Transaksi;
 import id.khisoft.dodu.home_screen;
 import id.khisoft.dodu.login_screen;
+import id.khisoft.dodu.tambah_kategori;
 import id.khisoft.dodu.tambah_keuangan;
 import id.khisoft.dodu.utils.ConfigApi;
 
@@ -343,6 +344,10 @@ public class KeuanganController {
 
                         ArrayList<String> kategoriString = new ArrayList<>();
 
+                        if(data.length() == 0 ){
+                            Toast.makeText(ctx, "Anda harus menambah kategori terlebih dahulu", Toast.LENGTH_LONG).show();
+                        }
+
                         for (int i = 0; i < data.length() ; i++) {
                             JSONObject j = new JSONObject(data.getString(i));
                             Kategori k = new Kategori();
@@ -409,7 +414,7 @@ public class KeuanganController {
                             try {
                                 params.put("token", pref.getString("token", null));
                                 params.put("kategori", kategoriId);
-                                params.put("keluarMasuk", keluarMasuk);
+                                params.put("keluarMasuk", String.valueOf(keluarMasuk));
                                 params.put("nominal", nominal);
                                 params.put("keterangan", keterangan);
                             } catch (JSONException e) {

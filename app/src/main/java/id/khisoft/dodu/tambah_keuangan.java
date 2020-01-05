@@ -80,15 +80,22 @@ public class tambah_keuangan extends AppCompatActivity {
         btnTambahKeuangan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String kategoriName = String.valueOf(spKategori.getSelectedItem());
-                int kategoriIndex = spKategori.getSelectedItemPosition();
-                char keluarMasuk = rbPengeluaran.isChecked() ? 'K' : 'M';
-                int nominal = Integer.valueOf(etNominal.getText().toString());
-                String keterangan = etKeterangan.getText().toString();
 
-                kc.addKeuangan(kategoriName, kategoriIndex, keluarMasuk, nominal,keterangan);
+                if(spKategori.getSelectedItem() == null){
+                    Toast.makeText(getApplicationContext(), "Pilih kategori terlebih dahulu", Toast.LENGTH_LONG).show();
+                }else if(etNominal.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Nominal tidak boleh kosong", Toast.LENGTH_LONG).show();
+                }else{
+                    String kategoriName = String.valueOf(spKategori.getSelectedItem());
+                    int kategoriIndex = spKategori.getSelectedItemPosition();
+                    char keluarMasuk = rbPengeluaran.isChecked() ? 'K' : 'M';
+                    int nominal = Integer.valueOf(etNominal.getText().toString());
+                    String keterangan = etKeterangan.getText().toString().equals("") ? " " : etKeterangan.getText().toString();
 
-                finish();
+                    kc.addKeuangan(kategoriName, kategoriIndex, keluarMasuk, nominal,keterangan);
+
+                    finish();
+                }
             }
         });
 

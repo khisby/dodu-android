@@ -54,19 +54,19 @@
 
 
     <EditText
-        android:id="@+id/etKeterangan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Masukkan Keterangan" />
-
-    <EditText
         android:id="@+id/etNominal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Masukkan Nominal Uang"
         android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/etKeterangan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Masukkan Keterangan" />
 
     <Button
         android:id="@+id/btnTambahKeuangan"

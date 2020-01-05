@@ -33,7 +33,7 @@ public class home_screen extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         SharedPreferences pref = getApplicationContext().getSharedPreferences("HomeActivity", MODE_PRIVATE);
-        if(pref.getBoolean("recreate",false)){
+        if(pref.getBoolean("recreate",true)){
             SharedPreferences.Editor editor = pref.edit();
             recreate();
             editor.putBoolean("recreate", false);

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import id.khisoft.dodu.Controller.KeuanganController;
 
@@ -25,8 +26,12 @@ public class tambah_kategori extends AppCompatActivity {
         btnKategori.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                kc.addKategori(etKategori.getText().toString());
-                finish();
+                if(etKategori.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Kategori tidak boleh kosong", Toast.LENGTH_LONG).show();
+                }else{
+                    kc.addKategori(etKategori.getText().toString());
+                    finish();
+                }
             }
         });
     }
