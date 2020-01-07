@@ -1,4 +1,4 @@
-# dodu-android
+w2# dodu-android
 
 Dompet Dhuwit adalah aplikasi pencatatan transaksi uang pribadi. Pengguna dapat melihat history transaksi dan laporan keuangan untuk memperhitungkan manajemen keuangan pada bulan berikutnya.
 
