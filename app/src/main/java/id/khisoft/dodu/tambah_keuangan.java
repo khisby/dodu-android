@@ -4,7 +4,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -93,8 +95,13 @@ public class tambah_keuangan extends AppCompatActivity {
                     String keterangan = etKeterangan.getText().toString().equals("") ? " " : etKeterangan.getText().toString();
 
                     kc.addKeuangan(kategoriName, kategoriIndex, keluarMasuk, nominal,keterangan);
-
-                    finish();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            finish();
+                        }
+                    }, 1000);
+//                    finish();
                 }
             }
         });
